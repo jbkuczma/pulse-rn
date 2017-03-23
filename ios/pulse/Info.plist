@@ -51,6 +51,11 @@
 				<true/>
 			</dict>
 		</dict>
+		<!-- added -->
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 	</dict>
+
+
 </dict>
 </plist>
