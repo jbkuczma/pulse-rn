@@ -5,9 +5,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import MainWindow from './App/Views/MainWindow'
-
-export default class Pulse extends Component {
+export default class MainWindow extends Component {
 
 	render() {
 
