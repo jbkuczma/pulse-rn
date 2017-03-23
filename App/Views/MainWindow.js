@@ -7,6 +7,9 @@ import {
 } from 'react-native';
 
 import Header from '../Components/Header'
+import SunGraph from '../Components/SunGraph'
+
+import Time from '../Util/TimeFunctions'
 
 var SunCalc = require('suncalc')
 
@@ -17,12 +20,14 @@ export default class MainWindow extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      position: '',
       latitude: '',
       longitude: '',
       currentCity: '',
-      sunset: '',
-      sunrise: ''
+      sunsetStart: '',
+      sunsetEnd: '',
+      sunriseStart: '',
+      sunriseEnd: '',
+      daylength: '' //seconds
     }
 
   }
@@ -75,25 +80,53 @@ export default class MainWindow extends Component {
       let currentDate  = new Date()
       let offset = currentDate.getTimezoneOffset() / 60
       let times = SunCalc.getTimes(new Date(), lat, lon)
-      let sunrise = times.sunrise
-      let sunset = times.sunset
+      let sunriseStart = times.sunrise
+      let sunriseEnd = times.goldenHourEnd
+      let sunsetStart = times.goldenHour
+      let sunsetEnd = times.sunset
       let isDaylightSavings = this.checkDaylightSavings()
 
       if(isDaylightSavings) {
         offset = offset - 1
       }
 
-      sunrise.setHours(sunrise.getHours() - offset)
-      sunset.setHours(sunset.getHours() - offset)
+      sunriseStart.setHours(sunriseStart.getHours() - offset)
+      sunsetStart.setHours(sunsetStart.getHours() - offset)
+      sunriseEnd.setHours(sunriseEnd.getHours() - offset)
+      sunsetEnd.setHours(sunsetEnd.getHours() - offset)
 
-      sunrise = sunrise.toLocaleTimeString()
-      sunset = sunset.toLocaleTimeString()
+      sunriseStart = sunriseStart.toLocaleTimeString()
+      sunsetStart = sunsetStart.toLocaleTimeString()
+      sunriseEnd = sunriseEnd.toLocaleTimeString()
+      sunsetEnd = sunsetEnd.toLocaleTimeString()
 
       this.setState({
-        currentCity: 'Buffalo',
-        sunrise: times.sunrise.toLocaleTimeString(),
-        sunset: times.sunset.toLocaleTimeString()
+        sunriseStart: sunriseStart,
+        sunsetStart: sunsetStart,
+        sunriseEnd: sunriseEnd,
+        sunsetEnd: sunsetEnd,
+        dayLength: this.getDayLength(sunriseEnd, sunsetStart)
+      }, () => {
+        this.getCurrentCity()
       })
+  }
+
+  /* gets the length of time between the time of the sunrise ending and the sunset beginning */
+  getDayLength(start, end){
+    // let t1 = Time.HMStoSec1(start)
+    // let t2 = Time.HMStoSec1(end)
+    // let diff = t2 - t1
+    // return diff
+    return Time.getDifferenceBetweenTwoTimes(start, end)
+  }
+
+ 
+
+  /* to do */
+  getCurrentCity() {
+    this.setState({
+      currentCity: 'Buffalo'
+    })
   }
 
 	render() {
@@ -102,11 +135,20 @@ export default class MainWindow extends Component {
 			<View style={styles.container}>
         <StatusBar hidden={true} />
         <View style={styles.header}>
-          <Header city={this.state.currentCity}/>
+          <Header 
+            city={this.state.currentCity}
+            latitude={this.state.latitude}
+            longitude={this.state.longitude}
+          />
         </View>
         <View style={styles.body}>
-          <Text> {this.state.sunrise} </Text>
-          <Text> {this.state.sunset} </Text>
+          <SunGraph 
+            sunriseStart={this.state.sunriseStart} 
+            sunsetStart={this.state.sunsetStart}
+            sunriseEnd={this.state.sunriseEnd} 
+            sunsetEnd={this.state.sunsetEnd}
+            dayLength={this.state.dayLength}
+          />
         </View>
 			</View>
 		)
@@ -118,18 +160,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#151719'
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0.1,
-    width: '100%',
-    backgroundColor: 'red'
+    width: '100%'
   },
   body: {
     flex: 0.9,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  grayText: {
+    color: '#EBECEB'
   }
 });

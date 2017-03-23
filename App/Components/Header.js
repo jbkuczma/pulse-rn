@@ -12,7 +12,7 @@ export default class Header extends Component {
 
     return (
       <View>
-        <Text> {this.props.city} </Text>
+        <Text style={styles.headerText}> {this.props.city} </Text>
       </View>
     )
 	}
@@ -23,6 +23,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#151719'
+  },
+  headerText: {
+    color: '#EBECEB',
+    fontSize: 24
   }
 });
