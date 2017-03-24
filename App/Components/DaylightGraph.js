@@ -9,8 +9,7 @@ import Time from '../Util/TimeFunctions'
 import Graph from './Chart/Graph'
 import TimeFooter from './TimeFooter'
 
-// think of a better name for this component
-export default class SunClock extends Component {
+export default class DaylightGraph extends Component {
 
   constructor(props){
     super(props)

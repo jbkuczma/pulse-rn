@@ -7,7 +7,8 @@ import {
 } from 'react-native';
 
 import Header from '../Components/Header'
-import SunGraph from '../Components/SunGraph'
+import DaylightGraph from '../Components/DaylightGraph'
+import PulseLoader from '../Components/PulseLoader/Loader'
 
 import Time from '../Util/TimeFunctions'
 
@@ -140,7 +141,6 @@ export default class MainWindow extends Component {
         let city = data.query.results.channel.location.city
         let region = data.query.results.channel.location.region
         let combined = city + ',' + region
-        console.log(combined)
         this.setState({
           currentCity: combined,
           loaded: true
@@ -152,7 +152,7 @@ export default class MainWindow extends Component {
 
     if(!this.state.loaded) {
       return (
-        <View><Text> Loading... Pulse Animation Here </Text></View>
+        <PulseLoader size={150} color='#F4511E' />
       )
     }
 		return (
@@ -166,7 +166,7 @@ export default class MainWindow extends Component {
           />
         </View>
         <View style={styles.body}>
-          <SunGraph 
+          <DaylightGraph 
             sunriseStart={this.state.sunriseStart} 
             sunsetStart={this.state.sunsetStart}
             sunriseEnd={this.state.sunriseEnd} 
