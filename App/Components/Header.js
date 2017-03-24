@@ -9,7 +9,7 @@ import {
 export default class Header extends Component {
 
   shortenGeoCoordinates(coordinate) {
-    return coordinate.toFixed(2)
+    return parseFloat(coordinate).toFixed(2)
   }
 
   addCompassDirectionForLatitude(coordinate) {
@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
   secondaryHeaderText: {
     color: '#EBECEB', 
     fontSize: 14,
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: '200'
   },
   second: {
     flex: 0.5

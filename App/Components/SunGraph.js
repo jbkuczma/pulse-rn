@@ -7,6 +7,7 @@ import {
 
 import Time from '../Util/TimeFunctions'
 import Graph from './Chart/Graph'
+import TimeFooter from './TimeFooter'
 
 // think of a better name for this component
 export default class SunClock extends Component {
@@ -65,20 +66,30 @@ export default class SunClock extends Component {
             <Graph data={data} colorMap={colorMap} />
           </View>
           <View style={styles.times}>
-            <Text style={styles.headerText}> {this.props.sunriseStart} </Text>
-            <Text style={styles.headerText}> {this.props.sunriseEnd} </Text>
-            <Text style={styles.headerText}> {this.props.sunsetStart} </Text>
-            <Text style={styles.headerText}> {this.props.sunsetEnd} </Text>
+            <TimeFooter
+              startTime={this.props.sunriseStart} 
+              endTime={this.props.sunriseEnd} 
+            />
+            <TimeFooter 
+              startTime={this.props.sunsetStart} 
+              endTime={this.props.sunsetEnd} 
+            />
           </View>
         </View>
       )
     } else {
       return(
+        // will be loading view
         <View><Text>  </Text></View>
       )
     }
 	}
 }
+
+// <Text style={styles.headerText}> {this.props.sunriseStart} </Text>
+// <Text style={styles.headerText}> {this.props.sunriseEnd} </Text>
+// <Text style={styles.headerText}> {this.props.sunsetStart} </Text>
+// <Text style={styles.headerText}> {this.props.sunsetEnd} </Text>
 
 const styles = StyleSheet.create({
   container: {
@@ -95,6 +106,9 @@ const styles = StyleSheet.create({
     flex: 0.8,
     justifyContent: 'center',
     alignItems: 'center',
+    transform: [
+      {rotate: '-90deg'}
+    ]
   },
   times: {
     flex: 0.2,
