@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#151719'
   },
   timeText: {
-    color: '#EBECEB'
+    color: '#EBECEB',
+    fontSize: 16
   },
   times: {
     flexDirection: 'row'

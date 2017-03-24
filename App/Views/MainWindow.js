@@ -33,8 +33,8 @@ export default class MainWindow extends Component {
   }
 
   componentWillMount() {
-    this.getUserCoordinates()
-    
+    navigator.geolocation.clearWatch();
+    this.getUserCoordinates()  
   }
 
   checkDaylightSavings() {
@@ -46,22 +46,8 @@ export default class MainWindow extends Component {
   }
 
   getUserCoordinates() {
-    // return new Promise( (resolve) => {
-    //   navigator.geolocation.getCurrentPosition( (position) => {
-    //     this.setState({
-    //       latitude: position.coords.latitude,
-    //       longitude: position.coords.longitude
-    //     }, 
-    //     () => { 
-    //       resolve() 
-    //     })
-    //   },
-    //   (error) => alert(JSON.stringify(error)),
-    //   {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    //   )
-    // })
-
     navigator.geolocation.getCurrentPosition( (position) => {
+      console.log(position)
         this.setState({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
@@ -124,9 +110,24 @@ export default class MainWindow extends Component {
 
   /* to do */
   getCurrentCity() {
-    this.setState({
-      currentCity: 'Buffalo'
-    })
+    let url = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&sensor=true`
+    console.log(url)
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        let city = ''
+        let state = ''
+        // let city = data.results[0].address_components[2].long_name
+        // let state = data.results[0].address_components[4].short_name
+        let combined = city + ', ' + state
+        this.setState({
+          currentCity: combined
+        })
+      })
+    // this.setState({
+    //   currentCity: 'Buffalo'
+    // })
   }
 
 	render() {
