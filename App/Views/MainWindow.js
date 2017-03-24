@@ -166,7 +166,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flex: 0.1,
-    width: '100%'
+    width: '100%',
+    backgroundColor: '#121416'
   },
   body: {
     flex: 0.9,
