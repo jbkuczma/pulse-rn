@@ -85,11 +85,6 @@ export default class DaylightGraph extends Component {
 	}
 }
 
-// <Text style={styles.headerText}> {this.props.sunriseStart} </Text>
-// <Text style={styles.headerText}> {this.props.sunriseEnd} </Text>
-// <Text style={styles.headerText}> {this.props.sunsetStart} </Text>
-// <Text style={styles.headerText}> {this.props.sunsetEnd} </Text>
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

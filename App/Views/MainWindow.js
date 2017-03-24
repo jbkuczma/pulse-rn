@@ -101,35 +101,10 @@ export default class MainWindow extends Component {
 
   /* gets the length of time between the time of the sunrise ending and the sunset beginning */
   getDayLength(start, end){
-    // let t1 = Time.HMStoSec1(start)
-    // let t2 = Time.HMStoSec1(end)
-    // let diff = t2 - t1
-    // return diff
     return Time.getDifferenceBetweenTwoTimes(start, end)
   }
 
- 
-
-  /* to do */
   getCurrentCity() {
-    // let url = `http://maps.googleapis.com/maps/api/geocode/json?latlng=${this.state.latitude},${this.state.longitude}&sensor=true`
-    // console.log(url)
-    // fetch(url)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data)
-    //     let city = ''
-    //     let state = ''
-    //     // let city = data.results[0].address_components[2].long_name
-    //     // let state = data.results[0].address_components[4].short_name
-    //     let combined = city + ', ' + state
-    //     this.setState({
-    //       currentCity: combined
-    //     })
-    //   })
-    // this.setState({
-    //   currentCity: 'Buffalo'
-    // })
     let baseURL = 'http://query.yahooapis.com/v1/public/yql?q='
     let query = `select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(${this.state.latitude},${this.state.longitude})")&format=json&diagnostics=true&callback=`
     query = query.replace(/\ /g,'%20')
@@ -202,17 +177,3 @@ const styles = StyleSheet.create({
     color: '#EBECEB'
   }
 });
-
-
-
-
-
-
-
-
-
-/*
-https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(SELECT%20woeid%20FROM%20geo.places%20WHERE%20text%3D%22(48.7141667%2C74.0063889)%22)&format=json&diagnostics=true&callback=
-
-http://query.yahooapis.com/v1/yqlselect%20*%20from%20weather.forecast%20where%20woeid%20in%20(SELECT%20woeid%20FROM%20geo.places%20WHERE%20text=%22(37.33233141,-122.0312186)%22)&format=json&diagnostics=true&callback=
-*/

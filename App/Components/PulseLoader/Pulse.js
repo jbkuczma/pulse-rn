@@ -18,19 +18,12 @@ export default class Pulse extends Component {
 
 	constructor(props){
 		super(props)
-		// this.state = {
-		// 	pulse: new Animated.ValueXY({
-		// 		x: 0.5,
-		// 		y: 1
-		// 	})
-		// }
-	}
-
-	state = {
-		pulse: new Animated.ValueXY({
-			x: 0.5,
-			y: 1
-		})
+		this.state = {
+			pulse: new Animated.ValueXY({
+				x: 0.5,
+				y: 1
+			})
+		}
 	}
 
 	componentDidMount() {
