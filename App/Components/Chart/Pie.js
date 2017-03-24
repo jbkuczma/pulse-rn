@@ -18,8 +18,7 @@ import Arc from './Arc';
 export default class Pie extends Component {
 
   constructor(props) {
-    super(props);
-    // this.colors = d3.schemeCategory10;
+    super(props)
     this.colors = this.props.colorMap
     this.arcs = d3
                 .pie()

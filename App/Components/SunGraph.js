@@ -55,7 +55,7 @@ export default class SunClock extends Component {
     // ]
 
     let data = this.createData()
-    let colorMap = ['orange', 'gray', 'orange', 'black']
+    let colorMap = ['#F4511E', '#ADABAB', '#F4511E', '#242527']
     
     // seems like a bad way to wait for the data to not be NaN
     if(data.length !== 0){
