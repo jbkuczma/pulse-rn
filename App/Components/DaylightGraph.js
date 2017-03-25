@@ -7,6 +7,7 @@ import {
 
 import Time from '../Util/TimeFunctions'
 import Graph from './Chart/Graph'
+import Triangle from './Chart/Triangle'
 import TimeFooter from './TimeFooter'
 
 export default class DaylightGraph extends Component {
@@ -64,6 +65,9 @@ export default class DaylightGraph extends Component {
           <View style={styles.graph}>
             <Graph data={data} colorMap={colorMap} />
           </View>
+          <View style={styles.triangle}>
+            <Triangle />
+          </View>
           <View style={styles.times}>
             <TimeFooter
               startTime={this.props.sunriseStart} 
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     // fontSize: 24
   },
   graph: {
-    flex: 0.8,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     transform: [
@@ -105,7 +109,11 @@ const styles = StyleSheet.create({
     ]
   },
   times: {
-    flex: 0.2,
+    flex: 0.3,
     flexDirection: 'row'
+  },
+  triangle: {
+    flex: 0.4,
+    alignItems: 'flex-start'
   }
 });
