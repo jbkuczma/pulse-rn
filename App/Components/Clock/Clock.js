@@ -9,6 +9,7 @@ const {
   Path
 } = ART
 
+
 import SecondHand from './SecondHand'
 import MinuteHand from './MinuteHand'
 import HourHand from './HourHand'
@@ -73,11 +74,13 @@ export default class Clock extends Component {
 				.arc(0, radius * -2, radius)
 				.close()
 
+
 		return (
+			
 			<Surface width={width} height={height}>
 				<Shape
 					radius={size}
-					// fill={this.props.color}
+					fill={this.props.color}
 					x={size}
 					y={size}	
 					d={path}
@@ -88,3 +91,4 @@ export default class Clock extends Component {
 	
 
 }
+

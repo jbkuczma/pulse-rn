@@ -228,7 +228,7 @@ export default class DaylightGraph extends Component {
       '#F4511E', //golden
       '#242527' //night
     ]
-    
+
     // seems like a bad way to wait for the data to not be NaN
     if(morningData.length !== 0){
       return (
@@ -249,6 +249,7 @@ export default class DaylightGraph extends Component {
             <View style={styles.morningGraph}>
               <Graph data={morningData} colorMap={morningColorMap} outerRadius={90} innerRadius={85}/>
             </View>
+            
             
           </View>
           <View style={styles.timeTextView}>

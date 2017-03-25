@@ -12,12 +12,13 @@ export default class TextClock extends Component {
 		this.state = {
 			hours: date[0],
 			minutes: date[1],
-			seconds: date[2]
+			seconds: date[2],
+			timeOfDay: date[3]
 		}
 			
 	}
 
-	updateTime( {hours, minutes, seconds} ) {
+	updateTime( {hours, minutes, seconds, timeOfDay} ) {
 		seconds+=1
 		if(seconds == 60) {
 			seconds = 0
@@ -30,7 +31,7 @@ export default class TextClock extends Component {
 		if(hours == 12) {
 			hour = 0
 		}
-		return {hours, minutes, seconds}
+		return {hours, minutes, seconds, timeOfDay}
 	}
 
 	componentDidMount(){
@@ -40,16 +41,21 @@ export default class TextClock extends Component {
 	}
 
 	initializeDate(){
-		let date = new Date()
-		let seconds = date.getSeconds()
-		let minutes = date.getMinutes()
-		let hours = date.getHours()
-		return [hours, minutes, seconds]
+		// let date = new Date().toLocaleString()
+		// let seconds = date.getSeconds()
+		// let minutes = date.getMinutes()
+		// let hours = date.getHours()
+		let date = new Date().toLocaleString().split(':')
+		let timeOfDay = date[2].split(' ')[1]
+		let seconds = date[2].split(' ')[0]
+		let minutes = date[1]
+		let hours = date[0].split(' ')[1]
+		return [parseInt(hours), parseInt(minutes), parseInt(seconds), timeOfDay]
 	}
 
 	render() {
 
-		let timeString = this.state.hours + ':' + this.state.minutes + ':' + this.state.seconds
+		let timeString = this.state.hours + ':' + this.state.minutes + ':' + this.state.seconds + ' ' + this.state.timeOfDay
 
 		return (
 			<Text> {timeString} </Text>
