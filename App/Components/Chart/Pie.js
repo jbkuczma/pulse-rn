@@ -53,6 +53,8 @@ export default class Pie extends Component {
         <Surface 
           width={2*this.props.outerRadius}
           height={2*this.props.outerRadius} 
+          // width={this.props.outerRadius}
+          // height={this.props.outerRadius} 
         >
           <Group x={this.props.outerRadius} y={this.props.outerRadius}>
                   { this.arcs.map((arcData,index) => this.getArc(arcData, index)) }

@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 0.1,
     width: '100%',
-    backgroundColor: '#121416'
+    backgroundColor: '#121416',
   },
   body: {
     flex: 0.9,
