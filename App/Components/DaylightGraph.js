@@ -146,6 +146,7 @@ import Graph from './Chart/Graph'
 import TimeFooter from './TimeFooter'
 import PulseLoader from './PulseLoader/Loader'
 import Clock from './Clock/Clock'
+import TextClock from './Clock/TextClock'
 
 export default class DaylightGraph extends Component {
 
@@ -245,14 +246,13 @@ export default class DaylightGraph extends Component {
               <Graph data={eveningData} colorMap={eveningColorMap} outerRadius={180} innerRadius={175}/>
             </View>
 
-            
             <View style={styles.morningGraph}>
               <Graph data={morningData} colorMap={morningColorMap} outerRadius={90} innerRadius={85}/>
             </View>
             
           </View>
           <View style={styles.timeTextView}>
-            <Text style={styles.timeText}> Current time here? </Text>
+            <Text style={styles.timeText}> <TextClock /> </Text>
           </View>
           <View style={styles.times}>
             <TimeFooter

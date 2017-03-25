@@ -1,19 +1,10 @@
 import React, {Component} from 'react';
 import {
-  ART
+ Text
 } from 'react-native'
 
-const {
-  Shape,
-  Surface,
-  Path
-} = ART
 
-import SecondHand from './SecondHand'
-import MinuteHand from './MinuteHand'
-import HourHand from './HourHand'
-
-export default class Clock extends Component {
+export default class TextClock extends Component {
 
 	constructor(props){
 		super(props)
@@ -56,33 +47,12 @@ export default class Clock extends Component {
 		return [hours, minutes, seconds]
 	}
 
-	makeClock() {
-
-	}
-
-
 	render() {
-		const {radius} = this.props
-		const {size} = this.props
-		const width = size * 2
-		const height = size * 2
-		
-		const path = Path()
-				.moveTo(0, -radius)
-				.arc(0, radius * 2, radius)
-				.arc(0, radius * -2, radius)
-				.close()
+
+		let timeString = this.state.hours + ':' + this.state.minutes + ':' + this.state.seconds
 
 		return (
-			<Surface width={width} height={height}>
-				<Shape
-					radius={size}
-					// fill={this.props.color}
-					x={size}
-					y={size}	
-					d={path}
-				/>
-			</Surface>
+			<Text> {timeString} </Text>
 		)
 	}
 	
