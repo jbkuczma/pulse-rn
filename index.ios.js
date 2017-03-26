@@ -11,3 +11,4 @@ import {
 import Pulse from './Pulse'
 
 AppRegistry.registerComponent('pulse', () => Pulse);
+

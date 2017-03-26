@@ -3,16 +3,38 @@ import {
   ART
 } from 'react-native'
 
-const {
-  Shape,
-  Surface,
-  Path
-} = ART
+// const {
+//   Shape,
+//   Surface,
+//   Path,
+//   Group
+// } = ART
+
+import Svg,{
+    Circle,
+    Ellipse,
+    G,
+    LinearGradient,
+    RadialGradient,
+    Line,
+    Path,
+    Polygon,
+    Polyline,
+    Rect,
+    Symbol,
+    Text,
+    Use,
+    Defs,
+    Stop
+} from 'react-native-svg';
+
+import * as d3 from 'd3'
 
 
 import SecondHand from './SecondHand'
 import MinuteHand from './MinuteHand'
 import HourHand from './HourHand'
+
 
 export default class Clock extends Component {
 
@@ -22,12 +44,14 @@ export default class Clock extends Component {
 		this.state = {
 			hours: date[0],
 			minutes: date[1],
-			seconds: date[2]
-		}
-			
+			seconds: date[2],
+			minuteHandLocation: 0,
+			hourHandLocation: 0,
+			secondHandLocation: 0
+		}	
 	}
 
-	updateTime( {hours, minutes, seconds} ) {
+	updateTime( {hours, minutes, seconds, hourHandLocation, minuteHandLocation, secondHandLocation} ) {
 		seconds+=1
 		if(seconds == 60) {
 			seconds = 0
@@ -40,13 +64,20 @@ export default class Clock extends Component {
 		if(hours == 12) {
 			hour = 0
 		}
-		return {hours, minutes, seconds}
+		secondHandLocation = seconds * 6
+		hourHandLocation = (hours / 12) * 360
+		minuteHandLocation = minutes * 6 + seconds / 60
+		return {hours, minutes, seconds, hourHandLocation, minuteHandLocation, secondHandLocation}
 	}
 
 	componentDidMount(){
 		this.interval = setInterval( () => {
 			this.setState(this.updateTime(this.state))
 		}, 1000)
+	}
+
+	componentWillMount() {
+		this.setState(this.updateTime(this.state))
 	}
 
 	initializeDate(){
@@ -57,38 +88,76 @@ export default class Clock extends Component {
 		return [hours, minutes, seconds]
 	}
 
-	makeClock() {
-
-	}
-
-
 	render() {
 		const {radius} = this.props
 		const {size} = this.props
 		const width = size * 2
 		const height = size * 2
 		
-		const path = Path()
-				.moveTo(0, -radius)
-				.arc(0, radius * 2, radius)
-				.arc(0, radius * -2, radius)
-				.close()
-
-
+		// face -> minute hand -> hour hand -> center point
 		return (
-			
-			<Surface width={width} height={height}>
-				<Shape
-					radius={size}
-					fill={this.props.color}
-					x={size}
-					y={size}	
-					d={path}
-				/>
-			</Surface>
+			<Svg
+			    width="320"
+			    height="320"
+			>
+				
+				<G rotate={this.state.minuteHandLocation} origin="160, 160">
+			    <Line
+			    	x1="160"
+			    	y1="160"
+			    	x2="160"
+			    	y2="90"
+			    	stroke="#565555"
+			    	strokeWidth="2"
+			    />
+			    </G>
+			    <G rotate={this.state.hourHandLocation} origin="160, 160">
+			    <Line
+			    	x1="160"
+			    	y1="160"
+			    	x2="160"
+			    	y2="120"
+			    	stroke="#BDBBBB"
+			    	strokeWidth="2"
+			    />
+			    </G>
+			    <G rotate={this.state.secondHandLocation} origin="160, 160">
+			    <Line
+			    	x1="160"
+			    	y1="160"
+			    	x2="160"
+			    	y2="100"
+			    	stroke="#848282"
+			    	strokeWidth="2"
+			    />
+			    </G>
+			    <Circle
+			    	cx="160"
+			    	cy="160"
+			    	r="2"
+			    	fill="#222222"
+			    />
+			</Svg>
 		)
 	}
 	
 
 }
+// return (
+			
+		// 	<Surface width={width} height={height}>
+		// 		<Group>
+		// 			<Shape
+		// 				radius={size}
+		// 				fill={this.props.color}
+		// 				x={size}
+		// 				y={size}	
+		// 				d={path}
+		// 			/>
+		// 			<Shape
+		// 				d={red}
+		// 			/>
+		// 		</Group>
+		// 	</Surface>
+		// )
 
