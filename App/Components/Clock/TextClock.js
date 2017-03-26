@@ -41,10 +41,6 @@ export default class TextClock extends Component {
 	}
 
 	initializeDate(){
-		// let date = new Date().toLocaleString()
-		// let seconds = date.getSeconds()
-		// let minutes = date.getMinutes()
-		// let hours = date.getHours()
 		let date = new Date().toLocaleString().split(':')
 		let timeOfDay = date[2].split(' ')[1]
 		let seconds = date[2].split(' ')[0]

@@ -3,38 +3,11 @@ import {
   ART
 } from 'react-native'
 
-// const {
-//   Shape,
-//   Surface,
-//   Path,
-//   Group
-// } = ART
-
 import Svg,{
     Circle,
-    Ellipse,
     G,
-    LinearGradient,
-    RadialGradient,
-    Line,
-    Path,
-    Polygon,
-    Polyline,
-    Rect,
-    Symbol,
-    Text,
-    Use,
-    Defs,
-    Stop
+    Line
 } from 'react-native-svg';
-
-import * as d3 from 'd3'
-
-
-import SecondHand from './SecondHand'
-import MinuteHand from './MinuteHand'
-import HourHand from './HourHand'
-
 
 export default class Clock extends Component {
 
@@ -51,6 +24,10 @@ export default class Clock extends Component {
 		}	
 	}
 
+	/* 
+	 * update the actual value for hours, minutes, and seconds. 
+	 * updated value is then used to determine the proper angle of each hand of the clock
+	 */
 	updateTime( {hours, minutes, seconds, hourHandLocation, minuteHandLocation, secondHandLocation} ) {
 		seconds+=1
 		if(seconds == 60) {
@@ -70,6 +47,7 @@ export default class Clock extends Component {
 		return {hours, minutes, seconds, hourHandLocation, minuteHandLocation, secondHandLocation}
 	}
 
+	/* update the hours, minutes, and seconds every second (1000ms) */
 	componentDidMount(){
 		this.interval = setInterval( () => {
 			this.setState(this.updateTime(this.state))
@@ -80,6 +58,7 @@ export default class Clock extends Component {
 		this.setState(this.updateTime(this.state))
 	}
 
+	/* get the current hours, minutes, seconds */
 	initializeDate(){
 		let date = new Date()
 		let seconds = date.getSeconds()
@@ -88,13 +67,16 @@ export default class Clock extends Component {
 		return [hours, minutes, seconds]
 	}
 
+	/*
+	 * our minimal clock face (only clock hands, no ticks or digits)
+	 * hierarchy for render: minutes hand -> hours hand -> seconds hand -> center point
+	 */
 	render() {
 		const {radius} = this.props
 		const {size} = this.props
 		const width = size * 2
 		const height = size * 2
 		
-		// face -> minute hand -> hour hand -> center point
 		return (
 			<Svg
 			    width="320"
@@ -102,34 +84,34 @@ export default class Clock extends Component {
 			>
 				
 				<G rotate={this.state.minuteHandLocation} origin="160, 160">
-			    <Line
-			    	x1="160"
-			    	y1="160"
-			    	x2="160"
-			    	y2="90"
-			    	stroke="#565555"
-			    	strokeWidth="2"
-			    />
+				    <Line
+				    	x1="160"
+				    	y1="160"
+				    	x2="160"
+				    	y2="90"
+				    	stroke="#565555"
+				    	strokeWidth="2"
+				    />
 			    </G>
 			    <G rotate={this.state.hourHandLocation} origin="160, 160">
-			    <Line
-			    	x1="160"
-			    	y1="160"
-			    	x2="160"
-			    	y2="120"
-			    	stroke="#BDBBBB"
-			    	strokeWidth="2"
-			    />
+				    <Line
+				    	x1="160"
+				    	y1="160"
+				    	x2="160"
+				    	y2="120"
+				    	stroke="#BDBBBB"
+				    	strokeWidth="2"
+				    />
 			    </G>
 			    <G rotate={this.state.secondHandLocation} origin="160, 160">
-			    <Line
-			    	x1="160"
-			    	y1="160"
-			    	x2="160"
-			    	y2="100"
-			    	stroke="#848282"
-			    	strokeWidth="2"
-			    />
+				    <Line
+				    	x1="160"
+				    	y1="160"
+				    	x2="160"
+				    	y2="100"
+				    	stroke="#848282"
+				    	strokeWidth="2"
+				    />
 			    </G>
 			    <Circle
 			    	cx="160"
@@ -140,24 +122,5 @@ export default class Clock extends Component {
 			</Svg>
 		)
 	}
-	
-
 }
-// return (
-			
-		// 	<Surface width={width} height={height}>
-		// 		<Group>
-		// 			<Shape
-		// 				radius={size}
-		// 				fill={this.props.color}
-		// 				x={size}
-		// 				y={size}	
-		// 				d={path}
-		// 			/>
-		// 			<Shape
-		// 				d={red}
-		// 			/>
-		// 		</Group>
-		// 	</Surface>
-		// )
 
