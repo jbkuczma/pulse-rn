@@ -62,12 +62,23 @@ export default class MainWindow extends Component {
       )
   }
 
+  /* where direction is 1 for east, -1 for west, and longitude is in (-180,180) */
+  getOffset() {
+    let y = this.state.latitude.toString()
+    let direction = y.charAt(0) == '-' ? -1 : 1
+    let longitude = this.state.longitude
+    return Math.round(direction * longitude * 24 / 360)
+  }
+
   getSunriseAndSunsetTimes() {
       let lat = this.state.latitude
       let lon = this.state.longitude
       let currentDate  = new Date()
-      let offset = currentDate.getTimezoneOffset() / 60
+      console.log(this.state)
+      // let offset = currentDate.getTimezoneOffset() / 60
+      let offset = 0
       let times = SunCalc.getTimes(new Date(), lat, lon)
+      console.log(times)
       let sunriseStart = times.sunrise
       let sunriseEnd = times.goldenHourEnd
       let sunsetStart = times.goldenHour
@@ -77,16 +88,22 @@ export default class MainWindow extends Component {
       if(isDaylightSavings) {
         offset = offset - 1
       }
+      console.log(offset)
+      console.log(sunriseStart)
 
-      sunriseStart.setHours(sunriseStart.getHours() - offset)
-      sunsetStart.setHours(sunsetStart.getHours() - offset)
-      sunriseEnd.setHours(sunriseEnd.getHours() - offset)
-      sunsetEnd.setHours(sunsetEnd.getHours() - offset)
+      /* messed with times when checking Buffalo. test/check with other cities */
+      /* without this PST doesn't work 🤔 */
+      // sunriseStart.setHours(sunriseStart.getHours() - offset)
+      // sunsetStart.setHours(sunsetStart.getHours() - offset)
+      // sunriseEnd.setHours(sunriseEnd.getHours() - offset)
+      // sunsetEnd.setHours(sunsetEnd.getHours() - offset)
 
       sunriseStart = sunriseStart.toLocaleTimeString()
       sunsetStart = sunsetStart.toLocaleTimeString()
       sunriseEnd = sunriseEnd.toLocaleTimeString()
       sunsetEnd = sunsetEnd.toLocaleTimeString()
+
+      console.log(sunriseStart)
 
       this.setState({
         sunriseStart: sunriseStart,
@@ -107,8 +124,8 @@ export default class MainWindow extends Component {
   getCurrentCity() {
     let baseURL = 'http://query.yahooapis.com/v1/public/yql?q='
     let query = `select * from weather.forecast where woeid in (SELECT woeid FROM geo.places WHERE text="(${this.state.latitude},${this.state.longitude})")&format=json&diagnostics=true&callback=`
-    query = query.replace(/\ /g,'%20')
-    query = query.replace(/\"/g, '%22')
+    query = query.replace(/\ /g,'%20') //replace spaces in url string with %20
+    query = query.replace(/\"/g, '%22') //replace " in url string with %22
     let url = baseURL + query
     fetch(url, {data: {format: 'json', q: query}})
       .then( (response) => response.json())

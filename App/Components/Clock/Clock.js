@@ -44,6 +44,7 @@ export default class Clock extends Component {
 		secondHandLocation = seconds * 6
 		hourHandLocation = (hours / 12) * 360
 		minuteHandLocation = minutes * 6 + seconds / 60
+
 		return {hours, minutes, seconds, hourHandLocation, minuteHandLocation, secondHandLocation}
 	}
 
